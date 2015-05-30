@@ -19,8 +19,16 @@
 #
 
 source ./utils.sh
+source ./fs.sh
 
 madb_print_copyright
+
+if [ `id -u` -ne 0 ]; then
+    echo 'Please run as root.'
+    echo
+
+    exit 1
+fi
 
 IMAGE_NAME=$1
 shift
@@ -29,6 +37,10 @@ if [ -z "$IMAGE_NAME" ]; then
     madb_print_usage
     exit 1
 fi
+
+FS_ROOT="${TMPDIR:-/tmp}/$IMAGE_NAME-root"
+
+madb_fs_init $FS_ROOT
 
 echo 'Done.'
 echo
