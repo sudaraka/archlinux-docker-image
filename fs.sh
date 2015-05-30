@@ -71,13 +71,13 @@ function _madb_make_dev_tree() {
 function madb_mount() {
     if [[ -z $MADB_MOUNTS ]]; then
         MADB_MOUNTS=()
-        trap '_madb_umount' EXIT
+        trap 'madb_umount' EXIT
     fi
 
     mount "$@" && MADB_MOUNTS=("$2" "${MADB_MOUNTS[@]}")
 }
 
-function _madb_umount() {
+function madb_umount() {
     if [ -z $MADB_MOUNTS ]; then
         return
     fi

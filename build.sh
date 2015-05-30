@@ -70,5 +70,15 @@ EOF
 
 chroot $FS_ROOT /bin/sh -c 'locale-gen'
 
-echo 'Done.'
+# Create pacman mirror list
+wget 'https://www.archlinux.org/mirrorlist/?country=all&protocol=http&protocol=https&ip_version=4&ip_version=6&use_mirror_status=on' -qO -| \
+    sed 's/^#\(.\+\)/\1/g' \
+    > $FS_ROOT/etc/pacman.d/mirrorlist
+
+madb_umount
+
+IMAGE_SIZE=`du -sh $FS_ROOT`
+
+echo
+echo "Generated image $IMAGE_NAME [$IMAGE_SIZE]"
 echo
