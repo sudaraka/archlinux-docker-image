@@ -77,7 +77,7 @@ wget 'https://www.archlinux.org/mirrorlist/?country=all&protocol=http&protocol=h
 
 madb_umount
 
-IMAGE_SIZE=`du -sh $FS_ROOT`
+IMAGE_SIZE=`du -sh $FS_ROOT|awk '{print $1}'`
 
 echo
 echo "Generated image $IMAGE_NAME [$IMAGE_SIZE]"
