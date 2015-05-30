@@ -68,6 +68,8 @@ function madb_install_packages() {
         exit 1
     fi
 
+    cp -r /var/lib/pacman/sync $FS_ROOT/var/lib/pacman/
+
     expect << EOF
         set send_slow {1 .1}
 
