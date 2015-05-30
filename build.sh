@@ -52,8 +52,23 @@ madb_fs_init $FS_ROOT
 
 madb_install_packages $FS_ROOT
 
+# Initialize pacman keys
 madb_mount proc "$FS_ROOT/proc" -t proc -o nosuid,noexec,nodev
 chroot $FS_ROOT /bin/sh -c 'haveged -w 1024; pacman-key --init; pkill haveged; pacman -Rcnsu --noconfirm haveged; pacman-key --populate archlinux; pkill gpg-agent'
+
+# Set default timezone to Asia/Colombo
+ln -s /usr/share/zoneinfo/Asia/Colombo $FS_ROOT/etc/localtime
+
+# Generate locale and set default to en_US (UTF-8)
+cat<<EOF >> $FS_ROOT/etc/locale.gen
+en_US UTF-8
+EOF
+
+cat<<EOF > $FS_ROOT/etc/locale.conf
+LANG=en_US
+EOF
+
+chroot $FS_ROOT /bin/sh -c 'locale-gen'
 
 echo 'Done.'
 echo
