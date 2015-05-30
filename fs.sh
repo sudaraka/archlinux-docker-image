@@ -78,7 +78,15 @@ function madb_mount() {
 }
 
 function _madb_umount() {
+    if [ -z $MADB_MOUNTS ]; then
+        return
+    fi
+
     umount "${MADB_MOUNTS[@]}"
+
+    if [ 0 -eq $? ]; then
+        MADB_MOUNTS=()
+    fi
 }
 
 function _madb_remove_root() {
