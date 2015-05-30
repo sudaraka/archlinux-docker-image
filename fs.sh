@@ -68,6 +68,19 @@ function _madb_make_dev_tree() {
     ln -sf /proc/self/fd $DEV_DIR/fd
 }
 
+function madb_mount() {
+    if [[ -z $MADB_MOUNTS ]]; then
+        MADB_MOUNTS=()
+        trap '_madb_umount' EXIT
+    fi
+
+    mount "$@" && MADB_MOUNTS=("$2" "${MADB_MOUNTS[@]}")
+}
+
+function _madb_umount() {
+    umount "${MADB_MOUNTS[@]}"
+}
+
 function _madb_remove_root() {
     rm -fr $1
 

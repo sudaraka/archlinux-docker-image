@@ -23,7 +23,6 @@ PKG_IGNORE=(
     dhcpcd
     diffutils
     gettext
-    glib2
     grep
     inetutils
     iproute2
@@ -37,13 +36,11 @@ PKG_IGNORE=(
     man-pages
     mdadm
     nano
-    nano
     netctl
     openresolv
     pciutils
     pcmciautils
     popt
-    procps-ng
     psmisc
     reiserfsprogs
     s-nail

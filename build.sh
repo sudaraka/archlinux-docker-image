@@ -52,5 +52,8 @@ madb_fs_init $FS_ROOT
 
 madb_install_packages $FS_ROOT
 
+madb_mount proc "$FS_ROOT/proc" -t proc -o nosuid,noexec,nodev
+chroot $FS_ROOT /bin/sh -c 'haveged -w 1024; pacman-key --init; pkill haveged; pacman -Rcnsu --noconfirm haveged; pacman-key --populate archlinux; pkill gpg-agent'
+
 echo 'Done.'
 echo
