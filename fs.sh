@@ -71,7 +71,6 @@ function _madb_make_dev_tree() {
 function madb_mount() {
     if [[ -z $MADB_MOUNTS ]]; then
         MADB_MOUNTS=()
-        trap 'madb_umount' EXIT
     fi
 
     mount "$@" && MADB_MOUNTS=("$2" "${MADB_MOUNTS[@]}")
@@ -90,6 +89,8 @@ function madb_umount() {
 }
 
 function _madb_remove_root() {
+    madb_umount
+
     rm -fr $1
 
     trap - EXIT HUP INT TERM
