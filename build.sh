@@ -20,11 +20,19 @@
 
 source ./utils.sh
 source ./fs.sh
+source ./pacman.sh
 
 madb_print_copyright
 
 if [ `id -u` -ne 0 ]; then
     echo 'Please run as root.'
+    echo
+
+    exit 1
+fi
+
+if [ ! -x "`which expect 2>/dev/null`" ]; then
+    echo 'Please install "expect" and try again'
     echo
 
     exit 1
@@ -41,6 +49,8 @@ fi
 FS_ROOT="${TMPDIR:-/tmp}/$IMAGE_NAME-root"
 
 madb_fs_init $FS_ROOT
+
+madb_install_packages $FS_ROOT
 
 echo 'Done.'
 echo
