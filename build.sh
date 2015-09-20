@@ -58,6 +58,14 @@ find $FS_ROOT/usr/share/zoneinfo/Asia/* -maxdepth 0 -type d ! -name Colombo \
 # Set default timezone to Asia/Colombo
 ln -s /usr/share/zoneinfo/Asia/Colombo $FS_ROOT/etc/localtime
 
+# Remove locale definitions other then en_US
+find $FS_ROOT/usr/share/locale/* -maxdepth 0 -type d ! -name en_US \
+    -exec rm -fr {} \;
+find $FS_ROOT/usr/share/i18n/locales/* -maxdepth 0 -type d ! -name en_US \
+    -exec rm -fr {} \;
+find $FS_ROOT/usr/share/i18n/charmaps/* -maxdepth 0 -type d ! -name UTF-8.gz \
+    -exec rm -fr {} \;
+
 # Generate locale and set default to en_US (UTF-8)
 cat<<EOF >> $FS_ROOT/etc/locale.gen
 en_US UTF-8
