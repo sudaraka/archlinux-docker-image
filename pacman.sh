@@ -16,10 +16,12 @@ PKG_IGNORE=(
     device-mapper
     dhcpcd
     diffutils
+    file
     gettext
     grep
     inetutils
     iproute2
+    iputils
     jfsutils
     libunistring
     licenses
@@ -37,11 +39,15 @@ PKG_IGNORE=(
     popt
     psmisc
     reiserfsprogs
+    shadow
     s-nail
+    sysfsutils
     systemd-sysvcompat
+    tar
     usbutils
     util-linux
     vi
+    which
     xfsprogs
 )
 
