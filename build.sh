@@ -47,7 +47,7 @@ madb_install_packages $FS_ROOT
 
 # Initialize pacman keys
 madb_mount proc "$FS_ROOT/proc" -t proc -o nosuid,noexec,nodev
-chroot $FS_ROOT /bin/sh -c 'haveged -w 1024; pacman-key --init; pkill haveged; pacman -Rcnsu --noconfirm haveged; pacman-key --populate archlinux; pkill gpg-agent'
+chroot $FS_ROOT /bin/sh -c 'haveged -w 1024; pacman-key --init; pkill haveged; pacman-key --populate archlinux; pkill gpg-agent'
 
 # Set default timezone to Asia/Colombo
 ln -s /usr/share/zoneinfo/Asia/Colombo $FS_ROOT/etc/localtime
@@ -62,6 +62,11 @@ LANG=en_US
 EOF
 
 chroot $FS_ROOT /bin/sh -c 'locale-gen'
+
+# Remove unwanted packages
+if [ ! -z "$PKG_REMOVE" ]; then
+    chroot $FS_ROOT /bin/sh -c "pacman -Rcnsu --noprogressbar --noconfirm $PKG_REMOVE"
+fi
 
 # Create pacman mirror list
 wget 'https://www.archlinux.org/mirrorlist/?country=all&protocol=http&protocol=https&ip_version=4&ip_version=6&use_mirror_status=on' -qO -| \
