@@ -80,7 +80,4 @@ function madb_install_packages() {
             -exact "installation? \[Y/n\] " { send -- "y\r"; exp_continue }
         }
 EOF
-
-    # Remove man pages and pacman db
-    rm -r $FS_ROOT/usr/share/{doc,man,terminfo}/*
 }

@@ -68,6 +68,9 @@ if [ ! -z "$PKG_REMOVE" ]; then
     chroot $FS_ROOT /bin/sh -c "pacman -Rcnsu --noprogressbar --noconfirm $PKG_REMOVE"
 fi
 
+# Remove man pages and other documentation
+chroot $FS_ROOT /bin/sh -c 'rm -r /usr/share/{doc,man,{,term,tex}info}/*'
+
 # Create pacman mirror list
 wget 'https://www.archlinux.org/mirrorlist/?country=all&protocol=http&protocol=https&ip_version=4&ip_version=6&use_mirror_status=on' -qO -| \
     sed 's/^#\(.\+\)/\1/g' \
