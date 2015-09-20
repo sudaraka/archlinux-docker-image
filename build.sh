@@ -49,6 +49,12 @@ madb_install_packages $FS_ROOT
 madb_mount proc "$FS_ROOT/proc" -t proc -o nosuid,noexec,nodev
 chroot $FS_ROOT /bin/sh -c 'haveged -w 1024; pacman-key --init; pkill haveged; pacman-key --populate archlinux; pkill gpg-agent'
 
+# Remove timezone definitions other then Asia/Colombo
+find $FS_ROOT/usr/share/zoneinfo/* -maxdepth 0 -type d ! -name Asia \
+    -exec rm -fr {} \;
+find $FS_ROOT/usr/share/zoneinfo/Asia/* -maxdepth 0 -type d ! -name Colombo \
+    -exec rm -fr {} \;
+
 # Set default timezone to Asia/Colombo
 ln -s /usr/share/zoneinfo/Asia/Colombo $FS_ROOT/etc/localtime
 
