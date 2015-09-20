@@ -82,5 +82,4 @@ EOF
 
     # Remove man pages and pacman db
     rm -r $FS_ROOT/usr/share/{doc,man,terminfo}/*
-    rm -r $FS_ROOT/var/lib/pacman/*
 }
