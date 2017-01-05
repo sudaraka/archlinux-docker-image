@@ -46,7 +46,7 @@ function _madb_make_dev_tree() {
         exit 1
     fi
 
-    mknod -m 666 $DEV_DIR/null c 1 3
+    # mknod -m 666 $DEV_DIR/null c 1 3
     mknod -m 666 $DEV_DIR/zero c 1 5
     mknod -m 666 $DEV_DIR/random c 1 8
     mknod -m 666 $DEV_DIR/urandom c 1 9
