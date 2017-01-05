@@ -3,7 +3,7 @@
 # build.sh: Install Arch Linux packages into a temporary location and build a
 #           Docker image from it
 #
-# Copyright 2015, Sudaraka Wijesinghe <sudaraka@sudaraka.org>
+# Copyright 2015, 2017 Sudaraka Wijesinghe <sudaraka@sudaraka.org>
 #
 # This program comes with ABSOLUTELY NO WARRANTY;
 # This is free software, and you are welcome to redistribute it and/or modify it
@@ -39,11 +39,23 @@ if [ -z "$IMAGE_NAME" ]; then
     exit 1
 fi
 
+POSTFIX=$(madb_get_postfix $IMAGE_NAME)
+
+if [ ! -z "$POSTFIX" -a -f "./build-$POSTFIX.sh" ]; then
+    source "./build-$POSTFIX.sh"
+fi
+
 FS_ROOT="${TMPDIR:-/tmp}/$IMAGE_NAME-root"
 
 madb_fs_init $FS_ROOT
 
 madb_install_packages $FS_ROOT
+
+# Install extra packages if plugin function exists
+if [ "function" == "$(type -t 'madb_install_extra_packages')" ]; then
+    madb_install_extra_packages $FS_ROOT
+fi
+
 
 # Initialize pacman keys
 madb_mount proc "$FS_ROOT/proc" -t proc -o nosuid,noexec,nodev
@@ -80,6 +92,11 @@ chroot $FS_ROOT /bin/sh -c 'locale-gen'
 # Remove unwanted packages
 if [ ! -z "$PKG_REMOVE" ]; then
     chroot $FS_ROOT /bin/sh -c "pacman -Rcnsu --noprogressbar --noconfirm $PKG_REMOVE"
+fi
+
+# Remove unwanted extra packages if plugin function exists
+if [ "function" == "$(type -t 'madb_remove_extra_packages')" ]; then
+    madb_remove_extra_packages $FS_ROOT
 fi
 
 # Remove man pages and other documentation
