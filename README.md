@@ -8,7 +8,7 @@ Inspired by [mkimage-arch.sh](https://github.com/docker/docker/blob/master/contr
 
 ## License
 
-Copyright 2015, Sudaraka Wijesinghe <sudaraka@sudaraka.org>
+Copyright 2015, 2017 Sudaraka Wijesinghe <sudaraka@sudaraka.org>
 
 This program comes with ABSOLUTELY NO WARRANTY;
 This is free software, and you are welcome to redistribute it and/or modify it
