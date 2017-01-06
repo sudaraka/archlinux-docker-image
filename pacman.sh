@@ -10,7 +10,7 @@
 
 SCRIPT_ROOT="$(realpath $(dirname $0))";
 PKG_INSTALL='base haveged'
-PKG_REMOVE='procps-ng sed haveged'
+PKG_REMOVE='procps-ng haveged'
 PKG_IGNORE=(
     cryptsetup
     device-mapper
